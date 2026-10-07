@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class BankAccount {
-    @Id @GeneratedValue
+    @Id
     private String id;
     private Date createAt;
     private Double balance;
