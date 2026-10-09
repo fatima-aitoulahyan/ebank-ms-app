@@ -4,6 +4,8 @@ import org.example.ebankservice.Fiegn.CustomerRestClient;
 import org.example.ebankservice.entities.BankAccount;
 import org.example.ebankservice.model.Customer;
 import org.example.ebankservice.repository.EBankAccountRepository;
+import org.springframework.ai.mcp.annotation.McpTool;
+import org.springframework.ai.mcp.annotation.McpToolParam;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,17 +20,20 @@ public class EbankService {
         this.customerRestClient=customerRestClient;
         this.bankAccountRepository=bankAccountRepository;
     }
+    @McpTool(description = "get all Bank Account")
     public List<BankAccount> getAllBankAccount(){
         return bankAccountRepository.findAll();
     }
-    public BankAccount getBankAccountById(String id){
+    @McpTool(description = "get account by id")
+    public BankAccount getBankAccountById(@McpToolParam(description = "the ID of Account ") String id){
         BankAccount bankAccount=  bankAccountRepository.findById(id).orElseThrow(()->new RuntimeException("bank Account NOt Found"));
         Customer customer = customerRestClient.getCustomerById(bankAccount.getCustomerId());
         bankAccount.setCustomer(customer);
         return bankAccount;
 
     }
-    public BankAccount save(BankAccount bankAccount){
+    @McpTool(description = "save new Bank account")
+    public BankAccount save(@McpToolParam(description = "the bank account to save") BankAccount bankAccount){
         try {
             Customer customer = customerRestClient.getCustomerById(bankAccount.getCustomerId());
             bankAccount.setCustomer(customer);
