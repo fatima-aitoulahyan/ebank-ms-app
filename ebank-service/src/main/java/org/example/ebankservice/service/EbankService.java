@@ -20,7 +20,7 @@ public class EbankService {
         this.customerRestClient=customerRestClient;
         this.bankAccountRepository=bankAccountRepository;
     }
-    @McpTool(description = "get all Bank Account")
+    @McpTool(description = "get all Bank Account width customer ID")
     public List<BankAccount> getAllBankAccount(){
         return bankAccountRepository.findAll();
     }

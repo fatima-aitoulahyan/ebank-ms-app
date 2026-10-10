@@ -6,6 +6,7 @@ import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 @Service
 public class EbankAIChat {
@@ -30,9 +31,7 @@ public class EbankAIChat {
                 .build();
     }
 
-    // Méthode principale avec surcharge ou valeur par défaut gérée en Java
     public String chat(Prompt prompt, String conversationId) {
-        // Si aucun ID de conversation n'est fourni, on utilise une valeur par défaut
         String activeConversationId = (conversationId != null && !conversationId.isEmpty()) ? conversationId : "user-1";
 
         return chatClient.prompt(prompt)
@@ -42,8 +41,23 @@ public class EbankAIChat {
                 .content();
     }
 
-    // Surcharge de méthode pour garder la possibilité d'appeler avec un seul paramètre
     public String chat(Prompt prompt) {
         return chat(prompt, "user-1");
     }
+
+    public Flux<String> chatStream(Prompt prompt, String conversationId) {
+        String activeConversationId =
+                (conversationId != null && !conversationId.isEmpty())
+                        ? conversationId
+                        : "user-1";
+
+        return chatClient.prompt(prompt)
+                .advisors(advisor -> advisor.param(
+                        ChatMemory.CONVERSATION_ID,
+                        activeConversationId
+                ))
+                .stream()
+                .content();
+    }
+
 }
