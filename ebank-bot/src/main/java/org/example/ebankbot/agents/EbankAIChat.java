@@ -3,9 +3,10 @@ package org.example.ebankbot.agents;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
+
 @Service
 public class EbankAIChat {
     private final ChatClient chatClient;
@@ -17,9 +18,9 @@ public class EbankAIChat {
 
         this.chatClient = builder
                 .defaultSystem("""
-                        Vous un assistant qui se charge de répondre aux question de l'utilisateur à 
+                        Vous êtes un assistant qui se charge de répondre aux questions de l'utilisateur à 
                         propos des clients et des comptes bancaires en fonction du contexte. 
-                        Si aucun contexte n'est fourni, répond avec JE NE SAIS PAS
+                        Si aucun contexte n'est fourni, répondez avec JE NE SAIS PAS
                         """
                 )
                 .defaultAdvisors(
@@ -29,15 +30,20 @@ public class EbankAIChat {
                 .build();
     }
 
-    public String chat(
-             String query,
-            @RequestParam(defaultValue = "user-1") String conversationId) {
+    // Méthode principale avec surcharge ou valeur par défaut gérée en Java
+    public String chat(Prompt prompt, String conversationId) {
+        // Si aucun ID de conversation n'est fourni, on utilise une valeur par défaut
+        String activeConversationId = (conversationId != null && !conversationId.isEmpty()) ? conversationId : "user-1";
 
-        return chatClient.prompt()
-                .user(query)
+        return chatClient.prompt(prompt)
                 .advisors(advisor -> advisor.param(
-                        ChatMemory.CONVERSATION_ID, conversationId))
+                        ChatMemory.CONVERSATION_ID, activeConversationId))
                 .call()
                 .content();
+    }
+
+    // Surcharge de méthode pour garder la possibilité d'appeler avec un seul paramètre
+    public String chat(Prompt prompt) {
+        return chat(prompt, "user-1");
     }
 }
