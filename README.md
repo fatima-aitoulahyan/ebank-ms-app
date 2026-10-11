@@ -37,7 +37,7 @@ Le système repose sur une architecture orientée microservices communicants, or
 ### 3. Interface Web Angular
 ![Angular App](captures/angular-app.jpg)
 ### 4. Interface Web Angular
-![Angular App1](captures/angular-app1jpg)
+![Angular App1](captures/angular-app1.jpg)
 
 
 ### 5. Bot Telegram & Agentic AI
