@@ -6,7 +6,7 @@ Ce projet représente l'application de synthèse des systèmes distribués encad
 
 Le système repose sur une architecture orientée microservices communicants, orchestrée par une passerelle et un service de découverte :
 
-![Architecture Globale du Système](captures/architecture.jpg)
+![Architecture Globale du Système](captures/architecture.jpg.png)
 
 ### Description des composants :
 * **`discovery-service` (Eureka)** : Assure l'enregistrement et la découverte dynamique des différents microservices.
@@ -30,8 +30,6 @@ Le système repose sur une architecture orientée microservices communicants, or
 
 ##  Captures d'écran du projet
 
-### 1. Architecture du Système
-![Architecture](captures/architecture.jpg)
 
 ### 2. Service de Découverte (Eureka Dashboard)
 ![Eureka Dashboard](captures/eureka-dashboard.jpg)
