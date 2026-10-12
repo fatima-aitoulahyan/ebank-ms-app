@@ -132,7 +132,7 @@ Sans protection, l'arrêt de `customer-service` ferait échouer les appels de `e
 
 **Scénario de test** : arrêt de `customer-service`, puis appel de `GET /accounts/{id}`.
 
-![Fallback Resilience4J](captures/Resilience4j_jpg.png)
+![Fallback Resilience4J](captures/Resilience4j.jpg.png)
 
 *Figure 8 : Service client arrêté — le compte est tout de même retourné, avec les valeurs de repli `"Not name"` / `"Not email"`.*
 
@@ -160,7 +160,7 @@ Le service `ebank-bot` embarque un **agent IA** construit avec **Spring AI** :
 - construction du `ChatClient` avec un **prompt système** qui cadre le comportement de l'agent ;
 - exposition d'un endpoint REST `GET /chat?query=...`.
 
-![Test de l'agent AI](captures/AI_jpg.png)
+![Test de l'agent AI](captures/AI.jpg.png)
 
 *Figure 10 : Question hors périmètre (`/chat?query=bonjour`) — l'agent, cadré par son prompt système, répond « JE NE SAIS PAS ».*
 
@@ -172,7 +172,7 @@ Les fonctionnalités de `customer-service` et `ebank-service` sont exposées com
 
 Le chatbot est connecté aux microservices par MCP et testé avec un client REST (navigateur / Postman) :
 
-![Test du chatbot via REST](captures/MCP_jpg.png)
+![Test du chatbot via REST](captures/MCP.jpg.png)
 
 *Figure 11 : `GET /chat?query=list clients` — l'agent appelle l'outil MCP et retourne la liste des clients (Fatima, Maryam, Sana).*
 
